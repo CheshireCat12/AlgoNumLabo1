@@ -15,6 +15,7 @@ for (let i = 0; i < 80; i++){
 	cos += temp;
 	n+=4;
 }
+console.log(cos)
 return cos;
 }
 

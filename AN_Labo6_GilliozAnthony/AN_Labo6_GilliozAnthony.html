@@ -1,0 +1,84 @@
+<html>
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>AN_Labo6_GilliozAnthony</title>
+    <script src="js/plotly-latest.min.js"></script>
+    <script src="js/function.js"></script>
+    <link href="style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+</head>
+<body class="w3-theme-l5">
+    <div class="w3-container w3-theme w3-padding-16 w3-center">
+        <h1>Algorithme numérique - Labo n°6 - Résolution d'équation</h1>
+    </div>
+    <div class="w3-main" style="width:80%;margin:auto;margin-bottom:50px;">
+        <h3><span class="w3-text-theme">Auteur</span> : Anthony Gillioz INF2dlm-a</h3>
+        <h3 class="w3-text-theme">Description:</h3>
+        <p>Ce projet implémente 3 façon de trouver les racines d'une fonction mathémathique. Et donne la meilleur méthode pour chaque fonction donnée.</p>
+        <ol>
+            <li>Méthode par dichotomie</li>
+            <li>Méthode de Newton</li>
+            <li>Méthode par point fixe</li>
+        </ol>
+        <div class="w3-card-2 ">
+            <header class="w3-container w3-theme-d3">
+                <h1>Calcul des racines</h1>
+            </header>
+            <div class="w3-container w3-padding-16">
+                <label for="mathFunction" class="w3-text-theme">Fonction mathématique</label>
+                <input type="text" name="mathFunction" style="max-width:300px" class="w3-input w3-border-theme w3-theme-l5" id="mathFunction" value="Math.sin(x)" placeholder="Enter a mathematical function"><br>
+                <label for="minValue" class="w3-text-theme">Plage de calcul</label><br>
+                <input type="text" name="minValue" id="minValue" style="max-width:100px;display:inline" class="w3-input w3-border-theme w3-theme-l5" value=""><span>&lt; X &lt;</span>
+                <input type="text" name="maxValue" id="maxValue" style="max-width:100px;display:inline" class="w3-input w3-border-theme w3-theme-l5" value=""><br>
+                <label for="step" class="w3-text-theme">Pas du parcours</label>
+                <input type="text" name="step" id="step" style="max-width:300px" class="w3-input w3-border-theme w3-theme-l5" value="0.1"><br>
+                <div class="w3-panel w3-red" style="display:none;" id="error">
+                    <h3>Attention !</h3>
+                    <p>Erreur de saisie.</p>
+                </div>
+                <button onclick="document.getElementById('id01').style.display='block'" class="w3-btn w3-theme-d3">Aide</button>
+                <button type="button" name="btnMathFunction" id="btnMathFunction" class="w3-btn w3-theme-d3"  onclick="evaluateFunc(); plotFunction()" >Calculer</button>
+            </div>
+        </div>
+        <div id="results" style="display:none;">
+            <h3 class="w3-text-theme">Résultat de la méthode par dichotomie</h3>
+            <table class="w3-table w3-striped w3-bordered" style="max-width:500px;" id="resultsDichotomy">
+            </table>
+            <h3 class="w3-text-theme">Résultat de la méthode de Newton</h3>
+            <table class="w3-table w3-striped w3-bordered" style="max-width:500px;" id="resultsNewton">
+            </table>
+            <h3 class="w3-text-theme">Résultat de la méthode du point fixe</h3>
+            <table class="w3-table w3-striped w3-bordered" style="max-width:500px;" id="resultsFixedPoint">
+            </table>
+            <h3 class="w3-text-theme">Comparaison des méthodes</h3>
+            <div id="comparaisonResult">
+
+            </div>
+        </div>
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <header class="w3-container w3-theme-d3">
+                    <span onclick="document.getElementById('id01').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                    <h2>Aide</h2>
+                </header>
+                <div class="w3-container">
+                    <p class="w3-text-theme w3-border-theme w3-border-bottom">Fonction mathématique</p>
+                    <p>Pour rentrer une fonction mathématique, il faut la rentrer sous la forme JS. Par exemple : Math.sin(x)-2*x</p>
+                    <p class="w3-text-theme w3-border-theme w3-border-bottom">Plage de calcul</p>
+                    <p>C'est sur cette plage que la fonction d'exploration va chercher où la fonction touche zéro.<br><span class="w3-text-red">Attention :</span> les valeurs rentrées ne sont pas comprise dans le domaine de calcul.</p>
+                    <p class="w3-text-theme w3-border-theme w3-border-bottom">Pas du parcours</p>
+                    <p>C'est le pas qui va être utilisé dans la fonction de explor pour trouver les endroits où les différentes fonction de recherche doivent être appliquées.</p>
+                </div>
+            </div>
+        </div>
+        <!--Div to show the graph-->
+        <div style="display:none;" id="plot">
+            <h3 class="w3-text-theme">Graphe de la fonction</h3>
+            <div id="FunctionPlot" style="width: 1200; height:600;"></div>
+        </div>
+    </div>
+</body>
+</html>
