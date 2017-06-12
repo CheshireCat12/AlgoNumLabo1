@@ -35,8 +35,6 @@
                 <label for="step" class="w3-text-theme">Pas du parcours</label>
                 <input type="text" name="step" id="step" style="max-width:300px" class="w3-input w3-border-theme w3-theme-l5" value="0.1"><br>
                 <div class="w3-panel w3-red" style="display:none;" id="error">
-                    <h3>Attention !</h3>
-                    <p>Erreur de saisie.</p>
                 </div>
                 <button onclick="document.getElementById('id01').style.display='block'" class="w3-btn w3-theme-d3">Aide</button>
                 <button type="button" name="btnMathFunction" id="btnMathFunction" class="w3-btn w3-theme-d3"  onclick="evaluateFunc(); plotFunction()" >Calculer</button>
@@ -71,6 +69,9 @@
                     <p>C'est sur cette plage que la fonction d'exploration va chercher où la fonction touche zéro.<br><span class="w3-text-red">Attention :</span> les valeurs rentrées ne sont pas comprise dans le domaine de calcul.</p>
                     <p class="w3-text-theme w3-border-theme w3-border-bottom">Pas du parcours</p>
                     <p>C'est le pas qui va être utilisé dans la fonction de explor pour trouver les endroits où les différentes fonction de recherche doivent être appliquées.</p>
+                    <p class="w3-text-theme w3-border-theme w3-border-bottom">Interprétation des résultat</p>
+                    <p>Les résultats des différentes méthode de résolution d'équation sont données avec leur temps de calcul réspectif</p>
+                    <p>Si une des méthodes donnes des résultats non souhaité (asymptote, valeur impossible) alors un message est affiché à la place</p>
                 </div>
             </div>
         </div>
