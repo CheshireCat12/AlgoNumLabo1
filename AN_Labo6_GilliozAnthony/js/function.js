@@ -3,6 +3,9 @@ var powTen = 8;
 var asymptLimit = 8 * Math.pow(10, 7);
 var epsilon = 1 * Math.pow(10, -powTen);
 
+/*
+*   function to recover the values from the html page and test the values.
+*/
 function evaluateFunc()
 {
     myFunc = $("mathFunction").value;
@@ -10,7 +13,6 @@ function evaluateFunc()
     let step;
     let min;
     let max;
-    let results = [];
     try {
         eval(myFunc);
 
@@ -18,7 +20,7 @@ function evaluateFunc()
         min = checkValue($("minValue"));
         max = checkValue($("maxValue"));
         $("error").style.display = "none";
-        let intersectionPoints = explore(step, f, min, max, results);
+        let intersectionPoints = explore(step, f, min, max);
         applyMethod(intersectionPoints);
         $('plot').style.display='block';
     } catch (e) {
@@ -27,6 +29,9 @@ function evaluateFunc()
     }
 }
 
+/*
+*   Function to check if the value pass in argumts is valid
+*/
 function checkValue(value)
 {
     if(value.value == "") throw new TypeError(value.id + " is empty");
@@ -36,6 +41,7 @@ function checkValue(value)
 
 /*
 *   Apply each method on the points found in the explore function.
+*   And show them in the html page
 */
 function applyMethod(intersectionPoints)
 {
@@ -71,6 +77,9 @@ function applyMethod(intersectionPoints)
     $('results').style.display='block';
 }
 
+/*
+*   function to display the final result of the computation
+*/
 function displayFinal(nameMethod, array)
 {
     return "<p>Zéro distinct trouvé grâce à la méthode "+ nameMethod +" : "+ array[0] +", avec un temps moyen de "+ array[1] +" milliseconds</p>";
@@ -82,6 +91,14 @@ function resetArray(id)
     tableRef.innerHTML = "<tr><th>Zéro en</th><th>temps(ms)</th></tr>";
 }
 
+/*
+*   Function to show the array pass in paramters in the html table
+*
+*   Arguments:  id (the id of the html table)
+*               array (the array to show)
+*
+*   Return:     array (the number of distinct roots found, and the average time to found them)
+*/
 function displayArray(id, array)
 {
     let tableRef = $(id);
@@ -116,6 +133,13 @@ function displayArray(id, array)
     return [countDisctinct, (countTime / countDisctinct).toFixed(3)];
 }
 
+/*
+*   Funtion to find the roots by the Newton's method.
+*
+*   Arguments : a & b the 2 limit needed in the dichotomy method
+*
+*   return : the root found
+*/
 function methodNewton(x0)
 {
     let f2 = fDerivate(f, 0.01);
@@ -130,9 +154,16 @@ function methodNewton(x0)
     {
         x2 = "Asymptote";
     }
-    return x2 = isZero(x2);
+    return (x2 = isZero(x2)).toFixed(powTen);
 }
 
+/*
+*   Funtion to find the roots by the fixed point method.
+*
+*   Arguments : a & b the 2 limit needed in the dichotomy method
+*
+*   return : the root found
+*/
 function pointFixe(x0)
 {
     let h = function(x)
@@ -152,9 +183,16 @@ function pointFixe(x0)
     {
         x2 = "Error computation";
     }
-    return x2 = isZero(x2);
+    return (x2 = isZero(x2)).toFixed(powTen);
 }
 
+/*
+*   Funtion to find the roots by the dichotomy's method.
+*
+*   Arguments : a & b the 2 limit needed in the dichotomy method
+*
+*   return : the root found
+*/
 function dichotomy(a, b)
 {
     let sa = Math.sign(f(a));
@@ -175,9 +213,16 @@ function dichotomy(a, b)
     if (f(result) > asymptLimit || f(result) < -asymptLimit){
         return "Asymptote";
     }
-    return result = isZero(result);
+    return (result = isZero(result)).toFixed(powTen);
 }
 
+/*
+*   Method to check if the number pass in paramters is close enough from zero to be a zero. If it's true return 0 else return the number.
+*
+*   Arguments : value (Number to check)
+*
+*   return :    0 or the value
+*/
 function isZero(value)
 {
     if(Math.abs(value) < Math.pow(10, -powTen))
@@ -190,6 +235,7 @@ function isZero(value)
 function isNumeric(value) {
   return !isNaN(parseFloat(value)) && isFinite(value);
 }
+
 /*
 *	Function to explore the range, this function is used to found all the values where the function past in parameters touch zero.
 *	This function use a constant step and we used this function for a disctontinuous function.
@@ -201,15 +247,11 @@ function isNumeric(value) {
 *
 *	Returns :		nothing
 */
-function explore(step, f, min, max, results){
+function explore(step, f, min, max){
     intersectionPoints = [];
     let i;
     for (i = min; i < max; i+= step)
     {
-        if (f(i) === 0.0)
-        {
-            results.push("x = " + 0.0);
-        }
         if ((f(i) > 0 && f(i+step) < 0) || (f(i) < 0 && f(i+step) > 0))
         {
             intersectionPoints.push(new Array(i, i+1));
@@ -218,9 +260,13 @@ function explore(step, f, min, max, results){
     return intersectionPoints;
 }
 
-/* As seen in lecture ¯\_(ツ)_/¯
-* Args : the base function
-* Returns : the approximated derivative function
+/*
+*   Function to return the derivate of the function pass in arguments.
+*
+*   Arguments : f (the base function)
+*               h (the error )
+*
+*   Returns :   the approximated derivative function
 */
 function fDerivate(f, h)
 {
@@ -231,6 +277,9 @@ function fDerivate(f, h)
     return newFunc;
 }
 
+/*
+*   return the evaluated function passed in arguments
+*/
 function f(x)
 {
     return eval(myFunc);
@@ -276,6 +325,9 @@ function plotFunction()
 
 }
 
+/*
+*   function to calculate the point for the plot function
+*/
 function plotCalculation(functionToPlot, name, min, max)
 {
     plot = {};
